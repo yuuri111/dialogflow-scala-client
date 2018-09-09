@@ -5,6 +5,6 @@ This is dialogflow library for scala.
 [Dialogflow](https://dialogflow.com) is Natural Language Understanding (NLU) Platform.
 
 # Usage
-Define the environment variable GOOGLE_CREDENTIALS in appliation.conf. For example:
+Define the environment variable GOOGLE_APPLICATION_CREDENTIALS in appliation.conf. For example:
 
-`export GOOGLE_CREDENTIALS=/path/key.json`
+`export GOOGLE_APPLICATION_CREDENTIALS=/path/key.json`
