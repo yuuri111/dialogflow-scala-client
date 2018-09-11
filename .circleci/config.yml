@@ -33,18 +33,18 @@ jobs:
       - run:
           name: Create Google Application Credential
           command: |
-            echo ${GOOGLE_APPLICATION_CREDENTIALS} | base64 --decode > ${HOME}/client-secret.json
+            echo ${GOOGLE_APPLICATION_CREDENTIALS} | base64 --decode > /tmp/client-secret.json
 
       # run tests!
       - run:
           name: Execute test
           environment:
             PROJECT_ID: ${PROJECT_ID}
-            GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/client-secret.json
+            GOOGLE_APPLICATION_CREDENTIALS: /tmp/client-secret.json
           command:
             cat /dev/null | sbt test:test
 
-      #- run:
-      #    name: Delete Google Application Credential
-      #    when: always
-      #    command: rm ${HOME}/client-secret.json
+      - run:
+          name: Delete Google Application Credential
+          when: always
+          command: rm /tmp/client-secret.json
