@@ -31,7 +31,17 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: cat /dev/null | sbt test:compile
+      - run:
+        name: Create Google Application Credential
+        command: |
+          echo ${GOOGLE_APPLICATION_CREDENTIALS} | base64 --decode > ${HOME}/client-secret.json
+      - run:
+        name: Set Environment
+        environment:
+          PROJECT_ID: ${PROJECT_ID}
+          GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/client-secret.json
+        command:
+          cat /dev/null | sbt test:test
 
       - save_cache:
           paths:
