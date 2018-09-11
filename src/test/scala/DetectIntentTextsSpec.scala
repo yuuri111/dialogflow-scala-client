@@ -4,18 +4,45 @@ import org.scalatest.FunSpec
 
 class DetectIntentTextsSpec extends FunSpec {
 
-  describe("DetectIntentTextsA Test") {
+  describe("DetectIntentTexts Test") {
 
-    it("should get response") {
+    it("it should get correct response if phrase is correct") {
       val config = ConfigFactory.load("reference.conf")
-      val result: Seq[Either[Throwable, QueryResult]] = DetectIntentTexts.detectIntentTexts(
+      val resultList: Seq[Either[Throwable, QueryResult]] = DetectIntentTexts.detectIntentTexts(
         config.getString("dialogflow.project-id"),
-        List("Thank you"),
+        List("Thank you", "1500"),
         config.getString("dialogflow.detect-intent.session-id"),
         config.getString("dialogflow.detect-intent.language-code")
       )
 
-      assert(result.length == 1)
+      for (resultEither: Either[Throwable, QueryResult] <- resultList) {
+        resultEither match {
+          case Right(result) =>
+            assert(result.getFulfillmentText == "Correct Phrase!")
+          case Left(_) =>
+            fail("Include invalid phrase")
+        }
+      }
+    }
+
+    it("it should not get correct response if phrase is not correct") {
+      val config = ConfigFactory.load("reference.conf")
+      val resultList: Seq[Either[Throwable, QueryResult]] = DetectIntentTexts.detectIntentTexts(
+        config.getString("dialogflow.project-id"),
+        List("Invalid phrase", "1000"),
+        config.getString("dialogflow.detect-intent.session-id"),
+        config.getString("dialogflow.detect-intent.language-code")
+      )
+
+      for (resultEither: Either[Throwable, QueryResult] <- resultList) {
+        resultEither match {
+          case Right(result) =>
+            assert(result.getFulfillmentText !== "Correct Phrase!")
+          case Left(_) =>
+            fail("unexpected exception")
+        }
+      }
+
     }
   }
 
