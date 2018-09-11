@@ -10,8 +10,7 @@ class DetectIntentTextsSpec extends FunSpec {
       val config = ConfigFactory.load("reference.conf")
       val resultList: Seq[Either[Throwable, QueryResult]] = DetectIntentTexts.detectIntentTexts(
         config.getString("dialogflow.project-id"),
-        //List("Thank you", "1500"),
-        List("Thank you"),
+        List("Thank you", "1500"),
         config.getString("dialogflow.detect-intent.session-id"),
         config.getString("dialogflow.detect-intent.language-code")
       )
