@@ -23,15 +23,17 @@ jobs:
 
     steps:
       - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "build.sbt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
       - run:
           name: Create Google Application Credential
           command: |
-            echo ${GOOGLE_APPLICATION_CREDENTIALS} | base64 --decode >> ${HOME}/client-secret.json
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies--{{ checksum "build.sbt" }}
+            echo ${GOOGLE_APPLICATION_CREDENTIALS} | base64 --decode > ${HOME}/client-secret.json
 
       # run tests!
       - run:
@@ -42,7 +44,7 @@ jobs:
           command:
             cat /dev/null | sbt test:test
 
-      - run:
-          name: Delete Google Application Credential
-          when: always
-          command: rm ${HOME}/client-secret.json
+      #- run:
+      #    name: Delete Google Application Credential
+      #    when: always
+      #    command: rm ${HOME}/client-secret.json
