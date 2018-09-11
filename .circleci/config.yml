@@ -46,7 +46,7 @@ jobs:
             PROJECT_ID: ${PROJECT_ID}
             GOOGLE_APPLICATION_CREDENTIALS: ${HOME}/client-secret.json
           command:
-            cat /dev/null | sbt test:test
+            cat /dev/null | sbt clean test:test
 
       - run:
           name: Delete Google Application Credential
