@@ -19,8 +19,8 @@ class DetectIntentTextsSpec extends FunSpec {
         resultEither match {
           case Right(result) =>
             assert(result.getFulfillmentText == "Correct Phrase!")
-          case Left(_) =>
-            fail("Include invalid phrase")
+          case Left(e) =>
+            fail(s"Include invalid phrase: ${e.getMessage}")
         }
       }
     }
@@ -38,8 +38,8 @@ class DetectIntentTextsSpec extends FunSpec {
         resultEither match {
           case Right(result) =>
             assert(result.getFulfillmentText !== "Correct Phrase!")
-          case Left(_) =>
-            fail("unexpected exception")
+          case Left(e) =>
+            fail(s"unexpected exception: ${e.getMessage}")
         }
       }
 
