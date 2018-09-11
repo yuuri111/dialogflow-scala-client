@@ -34,6 +34,9 @@ jobs:
           name: Create Google Application Credential
           command: |
             echo ${GOOGLE_APPLICATION_CREDENTIALS} | base64 --decode > /tmp/client-secret.json
+            head /tmp/client-secret.json
+            cat ${PROJECT_ID}
+
 
       # run tests!
       - run:
