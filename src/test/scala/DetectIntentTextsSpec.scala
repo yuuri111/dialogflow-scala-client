@@ -25,6 +25,7 @@ class DetectIntentTextsSpec extends FunSpec {
       }
     }
 
+    /*
     it("it should not get correct response if phrase is not correct") {
       val config = ConfigFactory.load("reference.conf")
       val resultList: Seq[Either[Throwable, QueryResult]] = DetectIntentTexts.detectIntentTexts(
@@ -44,6 +45,7 @@ class DetectIntentTextsSpec extends FunSpec {
       }
 
     }
+    */
   }
 
 }
