@@ -23,7 +23,7 @@ object DetectIntentTexts extends App with DialogSession {
 
         val response: DetectIntentResponse = Await.result(futureResponse, 3 seconds)
 
-        Option(response.getQueryResult()) match {
+        Option(response.getQueryResult) match {
           case Some(result) => Right(result)
           case None => throw new DetectIntentTextsException("detect intent return null")
         }
