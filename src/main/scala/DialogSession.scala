@@ -1,16 +1,26 @@
-import com.google.cloud.dialogflow.v2._
+import com.google.cloud.dialogflow.v2beta1._
 
 trait DialogSession {
 
-  def createSession() = {
-    SessionsClient.create()
+  lazy val sessionsClient = SessionsClient.create()
+
+  def getSessionName(projectId: String, sessionId: String) = {
+
+    SessionName.of(projectId, sessionId)
+
   }
 
-  def detectIntent(projectId: String, sessionId: String, queryInput: QueryInput) =  {
+  def detectIntent(projectId: String, sessionId: String, queryInput: QueryInput) = {
 
     val session: SessionName = SessionName.of(projectId, sessionId)
 
-    createSession().detectIntent(session, queryInput)
+    sessionsClient.detectIntent(session, queryInput)
   }
+
+  def detectIntent(detectIntentRequest: DetectIntentRequest) = {
+
+    sessionsClient.detectIntent(detectIntentRequest)
+  }
+
 
 }
