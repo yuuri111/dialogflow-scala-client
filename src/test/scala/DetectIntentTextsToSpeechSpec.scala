@@ -8,7 +8,7 @@ class DetectIntentTextsToSpeechSpec extends FunSpec {
 
     it("it should get correct response if phrase is correct") {
       val config = ConfigFactory.load("reference.conf")
-      val responseList: Seq[Either[Throwable, DetectIntentResponse]] = DetectIntentTextsToSpeech.detectIntentTexts(
+      val responseList: Seq[Either[Throwable, DetectIntentResponse]] = DetectIntentTextsToSpeech.detectIntentTexttoSpeech(
         config.getString("dialogflow.project-id"),
         List("Thank you", "1500"),
         config.getString("dialogflow.detect-intent.session-id"),
@@ -28,7 +28,7 @@ class DetectIntentTextsToSpeechSpec extends FunSpec {
 
     it("it should not get correct response if phrase is not correct") {
       val config = ConfigFactory.load("reference.conf")
-      val responseList: Seq[Either[Throwable, DetectIntentResponse]] = DetectIntentTextsToSpeech.detectIntentTexts(
+      val responseList: Seq[Either[Throwable, DetectIntentResponse]] = DetectIntentTextsToSpeech.detectIntentTexttoSpeech(
         config.getString("dialogflow.project-id"),
         List("Invalid phrase", "1000"),
         config.getString("dialogflow.detect-intent.session-id"),

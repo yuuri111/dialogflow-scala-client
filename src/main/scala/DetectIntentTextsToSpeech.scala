@@ -7,7 +7,7 @@ import scala.concurrent.{Await, Future}
 
 object DetectIntentTextsToSpeech extends DialogSession {
 
-  def detectIntentTexts(
+  def detectIntentTexttoSpeech(
                          projectId: String,
                          texts: List[String],
                          sessionId: String,

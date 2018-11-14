@@ -7,7 +7,7 @@ import scala.collection.JavaConverters._
 
 object EntityTypes extends App {
 
-  def getEntity(projectId: String) = {
+  def getEntity(projectId: String, timeout: FiniteDuration = 5.seconds) = {
     try {
       val entityTypesClient: EntityTypesClient = EntityTypesClient.create()
       val project: ProjectAgentName = ProjectAgentName.of(projectId)
@@ -17,7 +17,7 @@ object EntityTypes extends App {
       }
 
       val response: EntityTypesClient.ListEntityTypesPagedResponse
-      = Await.result(futureResponse, 3 seconds)
+      = Await.result(futureResponse, timeout)
 
       Right(response.iterateAll().asScala.to[Seq])
     } catch {

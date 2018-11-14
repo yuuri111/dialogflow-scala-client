@@ -7,7 +7,12 @@ import scala.concurrent.{Await, Future}
 
 object DetectIntentTexts extends DialogSession {
 
-  def detectIntentTexts(projectId: String, texts: List[String], sessionId: String, languageCode: String)
+  def detectIntentTexts(
+                         projectId: String,
+                         texts: List[String],
+                         sessionId: String,
+                         languageCode: String,
+                         timeout: FiniteDuration = 5.seconds)
   : Seq[Either[Throwable, QueryResult]] = {
     for (text <- texts) yield {
       try {
@@ -19,12 +24,11 @@ object DetectIntentTexts extends DialogSession {
           detectIntent(projectId, sessionId, queryInput)
         }
 
-        val response: DetectIntentResponse = Await.result(futureResponse, 5 seconds)
+        val response: DetectIntentResponse = Await.result(futureResponse, timeout)
 
         Right(response.getQueryResult)
       } catch {
         case e: Throwable => {
-          println(e.getMessage)
           Left(e)
         }
       }
