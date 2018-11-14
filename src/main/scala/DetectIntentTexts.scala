@@ -5,8 +5,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-case class DetectIntentTextsException(message: String) extends Exception
-
 object DetectIntentTexts extends DialogSession {
 
   def detectIntentTexts(projectId: String, texts: List[String], sessionId: String, languageCode: String)
@@ -23,13 +21,12 @@ object DetectIntentTexts extends DialogSession {
 
         val response: DetectIntentResponse = Await.result(futureResponse, 5 seconds)
 
-        Option(response.getQueryResult) match {
-          case Some(result) => Right(result)
-          case None => throw new DetectIntentTextsToSpeechException("detect intent return null")
-        }
-
+        Right(response.getQueryResult)
       } catch {
-        case e: Throwable => Left(e)
+        case e: Throwable => {
+          println(e.getMessage)
+          Left(e)
+        }
       }
     }
   }
