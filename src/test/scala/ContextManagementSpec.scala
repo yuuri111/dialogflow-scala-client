@@ -6,7 +6,7 @@ class ContextManagementSpec extends FunSpec with Matchers{
 
   describe("DetectIntentTexts Test") {
 
-    it("it should get correct response if phrase is correct") {
+    it("it should get correct response") {
 
       val config = ConfigFactory.load("reference.conf")
       val projectId = config.getString("dialogflow.project-id")
