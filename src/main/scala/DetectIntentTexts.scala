@@ -28,9 +28,7 @@ object DetectIntentTexts extends DialogSession {
 
         Right(response.getQueryResult)
       } catch {
-        case e: Throwable => {
-          Left(e)
-        }
+        case e: Throwable => Left(e)
       }
     }
   }

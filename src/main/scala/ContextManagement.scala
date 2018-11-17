@@ -1,8 +1,8 @@
 import com.google.cloud.dialogflow.v2beta1._
-import collection.JavaConverters._
+
+import scala.collection.JavaConverters._
 
 object ContextManagement extends DialogSession {
-
 
   def listContexts(sessionId: String, projectId: String): Either[Throwable, Iterable[Context]] = {
     try {
@@ -10,9 +10,7 @@ object ContextManagement extends DialogSession {
 
       Right(contextsClient.listContexts(getSessionName(projectId, sessionId)).iterateAll().asScala)
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
     }
   }
 
@@ -28,16 +26,14 @@ object ContextManagement extends DialogSession {
         .build()
 
       val context = Context.newBuilder()
-        .setName(contextName.toString())
+        .setName(contextName.toString)
         .setLifespanCount(lifespanCount)
         .build()
 
       Right(contextsClient.createContext(getSessionName(projectId, sessionId), context))
 
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
     }
   }
 
@@ -47,9 +43,7 @@ object ContextManagement extends DialogSession {
       val contextName = ContextName.of(projectId, sessionId, contextId)
       Right(contextsClient.deleteContext(contextName))
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
     }
   }
 

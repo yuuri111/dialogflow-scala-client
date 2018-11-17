@@ -1,10 +1,9 @@
-import com.google.cloud.dialogflow.v2beta1.Context
 import com.typesafe.config.ConfigFactory
 import org.scalatest.{FunSpec, Matchers}
 
 class ContextManagementSpec extends FunSpec with Matchers{
 
-  describe("DetectIntentTexts Test") {
+  describe("ContextManagement Test") {
 
     it("it should get correct response") {
 

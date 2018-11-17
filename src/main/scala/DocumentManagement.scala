@@ -12,9 +12,7 @@ object DocumentManagement extends DialogSession {
       val knowledgeBaseName = KnowledgeBaseName.of(projectId, knowledgeBaseId)
       Right(documentsClient.listDocuments(knowledgeBaseName).iterateAll().asScala)
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
     }
   }
 
@@ -43,9 +41,8 @@ object DocumentManagement extends DialogSession {
 
       Right(documentsClient.createDocumentAsync(createDocumentRequest))
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
+    } finally {
     }
   }
 
@@ -55,9 +52,7 @@ object DocumentManagement extends DialogSession {
       val documentName = DocumentName.of(projectId, knowledgeBaseId, documentId)
       Right(documentsClient.getDocument(documentName))
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
     }
   }
 
@@ -67,9 +62,7 @@ object DocumentManagement extends DialogSession {
       val documentName = DocumentName.of(projectId, knowledgeBaseId, documentId)
       Right(documentsClient.deleteDocumentAsync(documentName).getInitialFuture.get())
     } catch {
-      case e: Throwable => {
-        Left(e)
-      }
+      case e: Throwable => Left(e)
     }
   }
 

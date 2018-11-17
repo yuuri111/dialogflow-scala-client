@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 
 class DetectIntentTextsToSpeechSpec extends FunSpec {
 
-  describe("DetectIntentTexts Test") {
+  describe("DetectIntentTextsToSpeech Test") {
 
     it("it should get correct response if phrase is correct") {
       val config = ConfigFactory.load("reference.conf")
