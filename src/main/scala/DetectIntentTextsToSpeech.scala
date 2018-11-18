@@ -1,9 +1,7 @@
 import com.google.cloud.dialogflow.v2beta1.TextInput.Builder
 import com.google.cloud.dialogflow.v2beta1._
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
 
 object DetectIntentTextsToSpeech extends DialogSession {
 
@@ -24,16 +22,10 @@ object DetectIntentTextsToSpeech extends DialogSession {
           DetectIntentRequest.newBuilder()
             .setQueryInput(queryInput)
             .setOutputAudioConfig(getOutputAudioConfig())
-            .setSession(getSessionName(projectId, sessionId).toString())
+            .setSession(getSessionName(projectId, sessionId).toString)
             .build()
 
-        val futureResponse: Future[DetectIntentResponse] = Future {
-          detectIntent(detectIntentRequest)
-        }
-        val response: DetectIntentResponse = Await.result(futureResponse, timeout)
-
-        Right(response)
-
+         Right(detectIntent(detectIntentRequest))
       } catch {
         case e: Throwable => Left(e)
       }

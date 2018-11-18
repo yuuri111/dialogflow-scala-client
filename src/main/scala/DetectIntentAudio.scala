@@ -3,18 +3,13 @@ import java.nio.file.{Files, Paths}
 import com.google.cloud.dialogflow.v2beta1._
 import com.google.protobuf.ByteString
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
-
 object DetectIntentAudio extends DialogSession {
 
   def detectIntentAudio(
                          projectId: String,
                          audioFilePath: String,
                          sessionId: String,
-                         languageCode: String,
-                         timeout: FiniteDuration = 5.seconds)
+                         languageCode: String)
   : Either[Throwable, QueryResult] = {
     try {
       val queryInput: QueryInput =
@@ -29,13 +24,7 @@ object DetectIntentAudio extends DialogSession {
           .setInputAudio(ByteString.copyFrom(inputAudio))
           .build()
 
-      val futureResponse: Future[DetectIntentResponse] = Future {
-        detectIntent(request)
-      }
-
-      val response: DetectIntentResponse = Await.result(futureResponse, timeout)
-
-      Right(response.getQueryResult)
+      Right(detectIntent(request).getQueryResult)
     } catch {
       case e: Throwable => Left(e)
     }
