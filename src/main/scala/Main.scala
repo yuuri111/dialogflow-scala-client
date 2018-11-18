@@ -11,11 +11,11 @@ object Main extends App {
     config.getString("dialogflow.detect-intent.session-id"),
     config.getString("dialogflow.detect-intent.language-code")
   )
-  */
 
   val result = EntityTypes.getEntity(
     config.getString("dialogflow.project-id")
   )
 
   println(result)
+  */
 }

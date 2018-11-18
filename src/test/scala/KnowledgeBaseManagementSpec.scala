@@ -9,10 +9,8 @@ class KnowledgeBaseManagementSpec extends FunSpec with Matchers {
 
       val config = ConfigFactory.load("reference.conf")
       val projectId = config.getString("dialogflow.project-id")
-      val sessionId = config.getString("dialogflow.detect-intent.session-id")
       val knowledgebaseName = "test_knowledgebase"
       val documentbaseName = "test_documentbase"
-      val languageCode = "en-US"
 
       KnowledgebaseManagement.listKnowledgeBases(projectId) match {
         case Right(knowledgeBaseList) =>
