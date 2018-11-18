@@ -3,7 +3,7 @@ import org.scalatest.{FunSpec, Matchers}
 
 class KnowledgeBaseManagementSpec extends FunSpec with Matchers {
 
-  describe("DetectIntentTexts Test") {
+  describe("KnowledgeBaseManagement Test") {
 
     it("it should get correct response") {
 

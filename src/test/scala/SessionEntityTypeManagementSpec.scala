@@ -3,7 +3,7 @@ import org.scalatest.{FunSpec, Matchers}
 
 class SessionEntityTypeManagementSpec extends FunSpec with Matchers {
 
-  describe("Session EntityTypes Management Test") {
+  describe("SessionEntityTypesManagement Test") {
 
     it("it should get correct response") {
       val config        = ConfigFactory.load("reference.conf")
