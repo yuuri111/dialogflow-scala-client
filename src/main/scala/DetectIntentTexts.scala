@@ -3,12 +3,10 @@ import com.google.cloud.dialogflow.v2beta1._
 
 object DetectIntentTexts extends DialogSession {
 
-  def detectIntentTexts(
-                         projectId: String,
-                         texts: List[String],
-                         sessionId: String,
-                         languageCode: String)
-  : Seq[Either[Throwable, QueryResult]] = {
+  def detectIntentTexts(projectId: String,
+                        texts: List[String],
+                        sessionId: String,
+                        languageCode: String): Seq[Either[Throwable, QueryResult]] = {
     for (text <- texts) yield {
       try {
         val textInput: Builder = TextInput.newBuilder().setText(text).setLanguageCode(languageCode)

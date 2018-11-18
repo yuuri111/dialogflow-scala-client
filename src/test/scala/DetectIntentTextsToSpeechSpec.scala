@@ -8,12 +8,13 @@ class DetectIntentTextsToSpeechSpec extends FunSpec {
 
     it("it should get correct response if phrase is correct") {
       val config = ConfigFactory.load("reference.conf")
-      val responseList: Seq[Either[Throwable, DetectIntentResponse]] = DetectIntentTextsToSpeech.detectIntentTexttoSpeech(
-        config.getString("dialogflow.project-id"),
-        List("Thank you", "1500"),
-        config.getString("dialogflow.detect-intent.session-id"),
-        config.getString("dialogflow.detect-intent.language-code")
-      )
+      val responseList: Seq[Either[Throwable, DetectIntentResponse]] =
+        DetectIntentTextsToSpeech.detectIntentTexttoSpeech(
+          config.getString("dialogflow.project-id"),
+          List("Thank you", "1500"),
+          config.getString("dialogflow.detect-intent.session-id"),
+          config.getString("dialogflow.detect-intent.language-code")
+        )
 
       for (responseEither: Either[Throwable, DetectIntentResponse] <- responseList) {
         responseEither match {
@@ -28,12 +29,13 @@ class DetectIntentTextsToSpeechSpec extends FunSpec {
 
     it("it should not get correct response if phrase is not correct") {
       val config = ConfigFactory.load("reference.conf")
-      val responseList: Seq[Either[Throwable, DetectIntentResponse]] = DetectIntentTextsToSpeech.detectIntentTexttoSpeech(
-        config.getString("dialogflow.project-id"),
-        List("Invalid phrase", "1000"),
-        config.getString("dialogflow.detect-intent.session-id"),
-        config.getString("dialogflow.detect-intent.language-code")
-      )
+      val responseList: Seq[Either[Throwable, DetectIntentResponse]] =
+        DetectIntentTextsToSpeech.detectIntentTexttoSpeech(
+          config.getString("dialogflow.project-id"),
+          List("Invalid phrase", "1000"),
+          config.getString("dialogflow.detect-intent.session-id"),
+          config.getString("dialogflow.detect-intent.language-code")
+        )
 
       for (responseEither: Either[Throwable, DetectIntentResponse] <- responseList) {
         responseEither match {

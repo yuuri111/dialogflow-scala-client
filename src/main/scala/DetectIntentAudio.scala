@@ -5,12 +5,10 @@ import com.google.protobuf.ByteString
 
 object DetectIntentAudio extends DialogSession {
 
-  def detectIntentAudio(
-                         projectId: String,
-                         audioFilePath: String,
-                         sessionId: String,
-                         languageCode: String)
-  : Either[Throwable, QueryResult] = {
+  def detectIntentAudio(projectId: String,
+                        audioFilePath: String,
+                        sessionId: String,
+                        languageCode: String): Either[Throwable, QueryResult] = {
     try {
       val queryInput: QueryInput =
         QueryInput.newBuilder().setAudioConfig(getInputAudioConfig(languageCode)).build()
@@ -18,7 +16,8 @@ object DetectIntentAudio extends DialogSession {
       val inputAudio: Array[Byte] = Files.readAllBytes(Paths.get(audioFilePath))
 
       val request: DetectIntentRequest =
-        DetectIntentRequest.newBuilder()
+        DetectIntentRequest
+          .newBuilder()
           .setSession(getSessionName(projectId, sessionId).toString)
           .setQueryInput(queryInput)
           .setInputAudio(ByteString.copyFrom(inputAudio))
@@ -32,8 +31,9 @@ object DetectIntentAudio extends DialogSession {
 
   private def getInputAudioConfig(languageCode: String) = {
     val audioEncoding: AudioEncoding = AudioEncoding.AUDIO_ENCODING_LINEAR_16
-    val sampleRateHertz: Int = 16000
-    InputAudioConfig.newBuilder()
+    val sampleRateHertz: Int         = 16000
+    InputAudioConfig
+      .newBuilder()
       .setAudioEncoding(audioEncoding)
       .setLanguageCode(languageCode)
       .setSampleRateHertz(sampleRateHertz)

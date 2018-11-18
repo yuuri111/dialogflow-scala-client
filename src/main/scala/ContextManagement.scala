@@ -14,18 +14,22 @@ object ContextManagement extends DialogSession {
     }
   }
 
-  def createContext(contextId: String, sessionId: String, projectId: String,
+  def createContext(contextId: String,
+                    sessionId: String,
+                    projectId: String,
                     lifespanCount: Int): Either[Throwable, Context] = {
     try {
       val contextsClient: ContextsClient = ContextsClient.create()
 
-      val contextName = ContextName.newBuilder()
+      val contextName = ContextName
+        .newBuilder()
         .setProject(projectId)
         .setSession(sessionId)
         .setContext(contextId)
         .build()
 
-      val context = Context.newBuilder()
+      val context = Context
+        .newBuilder()
         .setName(contextName.toString)
         .setLifespanCount(lifespanCount)
         .build()
@@ -37,10 +41,12 @@ object ContextManagement extends DialogSession {
     }
   }
 
-  def deleteContext(contextId: String, sessionId: String, projectId: String): Either[Throwable, Unit] = {
+  def deleteContext(contextId: String,
+                    sessionId: String,
+                    projectId: String): Either[Throwable, Unit] = {
     try {
       val contextsClient: ContextsClient = ContextsClient.create()
-      val contextName = ContextName.of(projectId, sessionId, contextId)
+      val contextName                    = ContextName.of(projectId, sessionId, contextId)
       Right(contextsClient.deleteContext(contextName))
     } catch {
       case e: Throwable => Left(e)

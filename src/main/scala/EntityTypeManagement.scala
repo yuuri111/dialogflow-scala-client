@@ -8,7 +8,7 @@ object EntityTypeManagement extends App {
   def listEntityTypes(projectId: String): Either[Throwable, Iterable[EntityType]] = {
     try {
       val entityTypesClient: EntityTypesClient = EntityTypesClient.create()
-      val project: ProjectAgentName = ProjectAgentName.of(projectId)
+      val project: ProjectAgentName            = ProjectAgentName.of(projectId)
 
       Right(entityTypesClient.listEntityTypes(project).iterateAll().asScala)
     } catch {
@@ -16,12 +16,15 @@ object EntityTypeManagement extends App {
     }
   }
 
-  def createEntityType(projectId: String, displayName: String, kind: String): Either[Throwable, EntityType] = {
+  def createEntityType(projectId: String,
+                       displayName: String,
+                       kind: String): Either[Throwable, EntityType] = {
     try {
       val entityTypesClient: EntityTypesClient = EntityTypesClient.create()
-      val parent = ProjectAgentName.of(projectId)
+      val parent                               = ProjectAgentName.of(projectId)
 
-      val entityType = EntityType.newBuilder()
+      val entityType = EntityType
+        .newBuilder()
         .setDisplayName(displayName)
         .setKind(Kind.valueOf(kind))
         .build()
@@ -35,7 +38,7 @@ object EntityTypeManagement extends App {
   def deleteEntityType(projectId: String, entityTypeId: String): Either[Throwable, Unit] = {
     try {
       val entityTypesClient: EntityTypesClient = EntityTypesClient.create()
-      val name = EntityTypeName.of(projectId, entityTypeId)
+      val name                                 = EntityTypeName.of(projectId, entityTypeId)
 
       Right(entityTypesClient.deleteEntityType(name))
     } catch {
@@ -43,16 +46,18 @@ object EntityTypeManagement extends App {
     }
   }
 
-  def getEntityTypeIds(projectId: String, displayName: String): Either[Throwable, Iterable[String]] = {
+  def getEntityTypeIds(projectId: String,
+                       displayName: String): Either[Throwable, Iterable[String]] = {
     try {
       val entityTypesClient: EntityTypesClient = EntityTypesClient.create()
-      val parent = ProjectAgentName.of(projectId)
+      val parent                               = ProjectAgentName.of(projectId)
 
-      val entityTypeList: Iterable[EntityType] = entityTypesClient.listEntityTypes(parent).iterateAll().asScala
+      val entityTypeList: Iterable[EntityType] =
+        entityTypesClient.listEntityTypes(parent).iterateAll().asScala
 
-      val entityTypeIds = entityTypeList.withFilter(getSplitName(_).length > 0)
-        .map(entityType =>
-          getSplitName(entityType)(getSplitName(entityType).length - 1))
+      val entityTypeIds = entityTypeList
+        .withFilter(getSplitName(_).length > 0)
+        .map(entityType => getSplitName(entityType)(getSplitName(entityType).length - 1))
 
       Right(entityTypeIds)
     } catch {

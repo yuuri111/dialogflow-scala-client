@@ -6,12 +6,12 @@ import scala.concurrent.duration._
 object DetectIntentTextsToSpeech extends DialogSession {
 
   def detectIntentTexttoSpeech(
-                         projectId: String,
-                         texts: List[String],
-                         sessionId: String,
-                         languageCode: String,
-                         timeout: FiniteDuration = 5.seconds)
-  : Seq[Either[Throwable, DetectIntentResponse]] = {
+      projectId: String,
+      texts: List[String],
+      sessionId: String,
+      languageCode: String,
+      timeout: FiniteDuration = 5.seconds
+  ): Seq[Either[Throwable, DetectIntentResponse]] = {
     for (text <- texts) yield {
       try {
         val textInput: Builder = TextInput.newBuilder().setText(text).setLanguageCode(languageCode)
@@ -19,13 +19,14 @@ object DetectIntentTextsToSpeech extends DialogSession {
         val queryInput: QueryInput = QueryInput.newBuilder().setText(textInput).build()
 
         val detectIntentRequest: DetectIntentRequest =
-          DetectIntentRequest.newBuilder()
+          DetectIntentRequest
+            .newBuilder()
             .setQueryInput(queryInput)
             .setOutputAudioConfig(getOutputAudioConfig())
             .setSession(getSessionName(projectId, sessionId).toString)
             .build()
 
-         Right(detectIntent(detectIntentRequest))
+        Right(detectIntent(detectIntentRequest))
       } catch {
         case e: Throwable => Left(e)
       }
@@ -34,8 +35,9 @@ object DetectIntentTextsToSpeech extends DialogSession {
 
   private def getOutputAudioConfig() = {
     val audioEncoding: OutputAudioEncoding = OutputAudioEncoding.OUTPUT_AUDIO_ENCODING_LINEAR_16
-    val sampleRateHertz: Int = 16000
-    OutputAudioConfig.newBuilder()
+    val sampleRateHertz: Int               = 16000
+    OutputAudioConfig
+      .newBuilder()
       .setAudioEncoding(audioEncoding)
       .setSampleRateHertz(sampleRateHertz)
       .build()

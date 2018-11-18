@@ -1,13 +1,13 @@
 import com.typesafe.config.ConfigFactory
 import org.scalatest.{FunSpec, Matchers}
 
-class ContextManagementSpec extends FunSpec with Matchers{
+class ContextManagementSpec extends FunSpec with Matchers {
 
   describe("ContextManagement Test") {
 
     it("it should get correct response") {
 
-      val config = ConfigFactory.load("reference.conf")
+      val config    = ConfigFactory.load("reference.conf")
       val projectId = config.getString("dialogflow.project-id")
       val sessionId = config.getString("dialogflow.detect-intent.session-id")
       val contextId = "test_context"
@@ -16,7 +16,7 @@ class ContextManagementSpec extends FunSpec with Matchers{
       ContextManagement.listContexts(sessionId, projectId) match {
         case Right(listContexts) =>
           for (context <- listContexts) {
-            context.getName should include (contextId)
+            context.getName should include(contextId)
           }
         case Left(e) =>
           fail(s"invalid ${e.getMessage}")
@@ -26,7 +26,7 @@ class ContextManagementSpec extends FunSpec with Matchers{
       ContextManagement.listContexts(sessionId, projectId) match {
         case Right(listContexts) =>
           for (context <- listContexts) {
-            context.getName shouldNot include (contextId)
+            context.getName shouldNot include(contextId)
           }
         case Left(e) =>
           fail(s"invalid ${e.getMessage}")

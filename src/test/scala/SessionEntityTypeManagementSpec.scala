@@ -6,10 +6,10 @@ class SessionEntityTypeManagementSpec extends FunSpec with Matchers {
   describe("Session EntityTypes Management Test") {
 
     it("it should get correct response") {
-      val config = ConfigFactory.load("reference.conf")
-      val projectId = config.getString("dialogflow.project-id")
-      val displayName = "test_display_name"
-      val sessionId = config.getString("dialogflow.detect-intent.session-id")
+      val config        = ConfigFactory.load("reference.conf")
+      val projectId     = config.getString("dialogflow.project-id")
+      val displayName   = "test_display_name"
+      val sessionId     = config.getString("dialogflow.detect-intent.session-id")
       val entity_values = List("test_entity_value_1", "test_entity_value_2")
 
       EntityTypeManagement.createEntityType(projectId, displayName, "KIND_MAP") match {
@@ -18,7 +18,11 @@ class SessionEntityTypeManagementSpec extends FunSpec with Matchers {
           fail(s"invalid ${e.getMessage}")
       }
 
-      SessionEntityTypeManagement.createSessionEntityType(projectId, sessionId, entity_values, displayName, 1) match {
+      SessionEntityTypeManagement.createSessionEntityType(projectId,
+                                                          sessionId,
+                                                          entity_values,
+                                                          displayName,
+                                                          1) match {
         case Right(_) =>
         case Left(e) =>
           fail(s"invalid ${e.getMessage}")

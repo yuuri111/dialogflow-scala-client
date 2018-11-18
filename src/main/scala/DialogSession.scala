@@ -22,5 +22,4 @@ trait DialogSession {
     sessionsClient.detectIntent(detectIntentRequest)
   }
 
-
 }
